@@ -5,8 +5,10 @@ const apply = document.getElementById('apply')
 
 let updateTotalPrice = 0
 let seatCount = 0
+var isSelected = false
+var isTyped = false
 for (const seat of seatButton) {
-    seat.addEventListener('click', function (e) {
+    seat.addEventListener('click', function () {
         if (seatCount < 4) {
             seat.classList.add('btnBgColorChanged')
             seat.classList.add('text-white')
@@ -35,11 +37,13 @@ for (const seat of seatButton) {
             p3.innerText = ticketPricePerSeat;
             div.append(p1, p2, p3)
             appendedSection.appendChild(div)
-
             updateTotalPrice = seatCount * ticketPricePerSeat
             setInnerTextWithIdAndValue('total-price', updateTotalPrice)
             const grandFinal = updateTotalPrice
             setInnerTextWithIdAndValue('grand-total', grandFinal)
+
+            isSelected = true
+            check()
 
             if (seatCount === 4) {
                 apply.removeAttribute('disabled')
@@ -74,3 +78,15 @@ apply.addEventListener('click', function () {
         alert("Your coupon code isn't correct")
     }
 })
+
+function typeCheck() {
+    isTyped = true
+    check()
+}
+
+const visiblePopup = document.getElementById('success-popup')
+function check() {
+    if (isSelected === true && isTyped === true) {
+        visiblePopup.classList.remove('hidden')
+    }
+}
